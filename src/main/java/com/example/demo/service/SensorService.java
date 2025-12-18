@@ -1,30 +1,25 @@
 package com.example.demo.service;
-import java.util.Map;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
-import com.example.demo.entity.StudentEntity;
+import com.example.demo.entity.Sensor;
+import com.example.demo.repository.SensorRepository;
 import org.springframework.stereotype.Service;
 
-@Service
-public class StudentService {
-    Map<Integer,StudentEntity> mp = new HashMap<>();
+import java.util.List;
 
-    public StudentEntity savedata(StudentEntity st){
-        mp.put(st.getId(),st);
-        return  st;
+@Service
+public class SensorService {
+
+    private final SensorRepository sensorRepository;
+
+    public SensorService(SensorRepository sensorRepository) {
+        this.sensorRepository = sensorRepository;
     }
-    public List<StudentEntity>retdata(){
-        return new ArrayList<>(mp.values());
+
+    public Sensor save(Sensor sensor) {
+        return sensorRepository.save(sensor);
     }
-    public StudentEntity id(int id) {
-        return mp.get(id);
-    }
-    public StudentEntity ids(int id, StudentEntity st) {
-        return mp.put(id,st);
-    }
-    public StudentEntity isd(int id) {
-        return mp.remove(id);
+
+    public List<Sensor> getAll() {
+        return sensorRepository.findAll();
     }
 }
