@@ -19,24 +19,24 @@ public class StudentController {
     @Autowired
     StudentService src;
     @PostMapping("/post")
-    public StudentEntity postdata(@RequestBody StudentEntity st){
+    public Sensor postdata(@RequestBody Sensor st){
     return src.savedata(st);
 
     }
     @GetMapping("/Get")
-    public List<StudentEntity>getdata(){
+    public List<Sensor>getdata(){
         return src.retdata();
     }
     @GetMapping("/Getid/{id}")
-    public StudentEntity getIdval(@PathVariable int id){
+    public Sensor getIdval(@PathVariable int id){
         return src.id(id);
     }
     @PutMapping("/update/{id}")
-    public StudentEntity funName (@PathVariable int id,@RequestBody StudentEntity st){
+    public Sensor funName (@PathVariable int id,@RequestBody Sensor st){
     return src.ids(id,st);
 }
 @DeleteMapping("/delete/{id}")
-public StudentEntity delData(@PathVariable int id){
+public Sensor delData(@PathVariable int id){
     return src.isd(id);
 }
 }
