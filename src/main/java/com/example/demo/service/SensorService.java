@@ -1,40 +1,39 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Location;
-import com.example.demo.entity.Sensor;
+import com.example.demo.entity.*;
 import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.repository.LocationRepository;
-import com.example.demo.repository.SensorRepository;
+import com.example.demo.repository.*;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
 public class SensorService {
 
-    private final SensorRepository sensorRepository;
-    private final LocationRepository locationRepository;
+    private final SensorRepository sensorRepo;
+    private final LocationRepository locationRepo;
 
-    public SensorService(SensorRepository sensorRepository,
-                         LocationRepository locationRepository) {
-        this.sensorRepository = sensorRepository;
-        this.locationRepository = locationRepository;
+    public SensorService(SensorRepository sensorRepo, LocationRepository locationRepo) {
+        this.sensorRepo = sensorRepo;
+        this.locationRepo = locationRepo;
     }
 
     public Sensor createSensor(Long locationId, Sensor sensor) {
-        Location location = locationRepository.findById(locationId)
-                .orElseThrow(() -> new ResourceNotFoundException("Location not found"));
+        if (sensor.getSensorType() == null)
+            throw new IllegalArgumentException("sensorType");
 
-        sensor.setLocation(location);
-        return sensorRepository.save(sensor);
+        Location loc = locationRepo.findById(locationId)
+                .orElseThrow(() -> new ResourceNotFoundException("not found"));
+
+        sensor.setLocation(loc);
+        return sensorRepo.save(sensor);
     }
 
     public Sensor getSensor(Long id) {
-        return sensorRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Sensor not found"));
+        return sensorRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("not found"));
     }
 
     public List<Sensor> getAllSensors() {
-        return sensorRepository.findAll();
+        return sensorRepo.findAll();
     }
 }
