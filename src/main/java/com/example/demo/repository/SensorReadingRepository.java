@@ -1,19 +1,9 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.SensorReading;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.jpa.repository.JpaRepository;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import com.example.demo.entity.Zone;
 
-public interface SensorReadingRepository
-        extends JpaRepository<SensorReading, Long> {
+public interface ZoneRepository extends JpaRespository<user,Long>{
 
-    List<SensorReading> findBySensor_Id(Long sensorId);
-
-    List<SensorReading> findBySensor_IdAndReadingTimeBetween(
-            Long sensorId,
-            LocalDateTime start,
-            LocalDateTime end
-    );
 }
