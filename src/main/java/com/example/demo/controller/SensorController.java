@@ -16,13 +16,19 @@ public class SensorController {
         this.sensorService = sensorService;
     }
 
-    @PostMapping
-    public Sensor create(@RequestBody Sensor sensor) {
-        return sensorService.save(sensor);
+    @PostMapping("/{locationId}")
+    public Sensor create(@PathVariable Long locationId,
+                         @RequestBody Sensor sensor) {
+        return sensorService.createSensor(locationId, sensor);
+    }
+
+    @GetMapping("/{id}")
+    public Sensor get(@PathVariable Long id) {
+        return sensorService.getSensor(id);
     }
 
     @GetMapping
     public List<Sensor> getAll() {
-        return sensorService.getAll();
+        return sensorService.getAllSensors();
     }
 }

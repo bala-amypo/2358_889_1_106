@@ -1,45 +1,40 @@
-package com.example.demo2.entity;
+package com.example.demo.entity;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
 public class ComplianceThreshold {
-      @Id
-    private long id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String sensorType;
-    private double maxValue;
+    private Double maxValue;
     private String severityLevel;
     private LocalDateTime createdAt;
-    public long getId() {
+
+    @PrePersist
+    public void prePersist() {
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now();
+        }
+    }
+
+    public Long getId() {
         return id;
     }
-    public void setId(long id) {
-        this.id = id;
-    }
+
     public String getSensorType() {
         return sensorType;
     }
-    public void setSensorType(String sensorType) {
-        this.sensorType = sensorType;
-    }
-    public double getMaxValue() {
+
+    public Double getMaxValue() {
         return maxValue;
     }
-    public void setMaxValue(double maxValue) {
-        this.maxValue = maxValue;
-    }
+
     public String getSeverityLevel() {
         return severityLevel;
     }
-    public void setSeverityLevel(String severityLevel) {
-        this.severityLevel = severityLevel;
-    }
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    
-
 }

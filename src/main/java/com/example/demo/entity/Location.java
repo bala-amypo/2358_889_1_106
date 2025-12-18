@@ -1,43 +1,29 @@
 package com.example.demo.entity;
+
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 
-import java.lang.reflect.AccessFlag.Location;
-import java.time.LocalDateTime;
+@Entity
+public class Location {
 
-public class location{
-    private long id;
-    private String locationName;
-    private String descripton;
-    private LocalDateTime createdAt;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    
-    public location() {
-    }
-    public long getId() {
+    private String name;
+
+    public Long getId() {
         return id;
     }
-    public void setId(long id) {
+
+    public void setId(Long id) {
         this.id = id;
     }
-    public String getLocationName() {
-        return locationName;
-    }
-    public void setLocationName(String locationName) {
-        this.locationName = locationName;
-    }
-    public String getDescripton() {
-        return descripton;
-    }
-    public void setDescripton(String descripton) {
-        this.descripton = descripton;
-    }
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+
+    public String getName() {
+        return name;
     }
 
-
+    public void setName(String name) {
+        this.name = name;
+    }
 }
