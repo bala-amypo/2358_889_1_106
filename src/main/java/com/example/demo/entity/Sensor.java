@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import java.time.LocalDate;
+import java.persistence.Column;
 
 public class StudentEntity {
     private Long id;
