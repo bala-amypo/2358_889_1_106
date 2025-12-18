@@ -1,45 +1,89 @@
 package com.example.demo.entity;
 
-import java.time.LocalDate;
-import java.persistence.Column;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
-public class StudentEntity {
+@Entity
+@Table(
+    name = "sensor",
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = "sensor_code")
+    }
+)
+public class Sensor {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @column(message="unique")
+
+    @Column(name = "sensor_code", nullable = false, unique = true)
     private String sensorCode;
-    
-    private LocalDate date;
-    private float cgpa;
-    public String getName() {
-        return name;
+
+    @NotBlank(message = "sensorType is required")
+    @Column(name = "sensor_type", nullable = false)
+    private String sensorType;
+
+    @ManyToOne
+    @JoinColumn(name = "location_id", nullable = false)
+    private Location location;
+
+    @Column(name = "installed_at")
+    private LocalDateTime installedAt;
+
+    @Column(name = "is_active")
+    private Boolean isActive;
+
+    @PrePersist
+    public void prePersist() {
+        if (isActive == null) {
+            isActive = true;
+        }
+        if (installedAt == null) {
+            installedAt = LocalDateTime.now();
+        }
     }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public int getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(int id) {
-        this.id = id;
-    }
-    public LocalDate getDate() {
-        return date;
-    }
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-    public float getCgpa() {
-        return cgpa;
-    }
-    public void setCgpa(float cgpa) {
-        this.cgpa = cgpa;
-    }
-    public StudentEntity(String name, int id, LocalDate date, float cgpa) {
-        this.name = name;
-        this.id = id;
-        this.date = date;
-        this.cgpa = cgpa;
-    }
-    
 
+    public String getSensorCode() {
+        return sensorCode;
+    }
+
+    public void setSensorCode(String sensorCode) {
+        this.sensorCode = sensorCode;
+    }
+
+    public String getSensorType() {
+        return sensorType;
+    }
+
+    public void setSensorType(String sensorType) {
+        this.sensorType = sensorType;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public LocalDateTime getInstalledAt() {
+        return installedAt;
+    }
+
+    public void setInstalledAt(LocalDateTime installedAt) {
+        this.installedAt = installedAt;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean active) {
+        isActive = active;
+    }
 }
