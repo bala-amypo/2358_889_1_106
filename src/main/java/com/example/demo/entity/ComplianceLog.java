@@ -1,7 +1,6 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -12,77 +11,53 @@ public class ComplianceLog {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "sensor_reading_id", nullable = false, unique = true)
+    @JoinColumn(name = "sensor_reading_id", nullable = false)
     private SensorReading sensorReading;
 
     @ManyToOne
     @JoinColumn(name = "threshold_id", nullable = false)
     private ComplianceThreshold thresholdUsed;
 
-    @Column(nullable = false)
     private String statusAssigned;
-
     private String remarks;
 
-    private LocalDateTime loggedAt;
-
-    @PrePersist
-    public void prePersist() {
-        if (loggedAt == null) {
-            loggedAt = LocalDateTime.now();
-        }
-
-        if (sensorReading != null && thresholdUsed != null) {
-            if (sensorReading.getReadingValue() > thresholdUsed.getMaxValue()) {
-                statusAssigned = thresholdUsed.getSeverityLevel();
-            } else {
-                statusAssigned = "COMPLIANT";
-            }
-        }
-    }
+    @Column(updatable = false)
+    private LocalDateTime loggedAt = LocalDateTime.now();
 
     public Long getId() {
         return id;
     }
-
+    public void setId(Long id) {
+        this.id = id;
+    }
     public SensorReading getSensorReading() {
         return sensorReading;
     }
-
     public void setSensorReading(SensorReading sensorReading) {
         this.sensorReading = sensorReading;
     }
-
     public ComplianceThreshold getThresholdUsed() {
         return thresholdUsed;
     }
-
     public void setThresholdUsed(ComplianceThreshold thresholdUsed) {
         this.thresholdUsed = thresholdUsed;
     }
-
     public String getStatusAssigned() {
         return statusAssigned;
     }
-
     public void setStatusAssigned(String statusAssigned) {
         this.statusAssigned = statusAssigned;
     }
-
     public String getRemarks() {
         return remarks;
     }
-
     public void setRemarks(String remarks) {
         this.remarks = remarks;
     }
-
     public LocalDateTime getLoggedAt() {
         return loggedAt;
     }
-
     public void setLoggedAt(LocalDateTime loggedAt) {
         this.loggedAt = loggedAt;
     }
 }
-
