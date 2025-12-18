@@ -14,7 +14,7 @@ public class SecurityConfig {
         return new OpenAPI()
                 // You need to change the port as per your server
                 .servers(List.of(
-                        new Server().url("https://9169.pro604cr.amypo.ai/")
+                        new Server().url("https://9206.pro604cr.amypo.ai/")
                 ));
         }
 }
