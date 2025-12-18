@@ -14,15 +14,15 @@ public class SensorReading {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "sensor_id", nullable = false)
+    @JoinColumn(name = "sensor_id")
     private Sensor sensor;
 
     @NotNull(message = "readingvalue is required")
-    @Column(name = "reading_value", nullable = false)
+    @Column(nullable = false)
     private Double readingValue;
 
-    @PastOrPresent(message = "readingTime cannot be future")
-    @Column(name = "reading_time", nullable = false)
+    @PastOrPresent
+    @Column(nullable = false)
     private LocalDateTime readingTime;
 
     @Column(nullable = false)
@@ -30,7 +30,7 @@ public class SensorReading {
 
     @PrePersist
     @PreUpdate
-    public void determineStatus() {
+    public void setStatus() {
         if (readingValue == null) {
             return;
         }
@@ -76,3 +76,4 @@ public class SensorReading {
         return status;
     }
 }
+
