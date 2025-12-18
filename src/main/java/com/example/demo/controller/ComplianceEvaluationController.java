@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/thresholds")
 @Tag(name = "Thresholds Endpoints")
-public class ComplianceThresholdController {
+public class ComplianceEvalutionController {
 
     private final ComplianceThresholdService thresholdService;
 
