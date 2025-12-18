@@ -7,13 +7,6 @@ public class StudentEntity {
     private int id;
     private LocalDate date;
     private float cgpa;
-    public StudentEntity(String name, int id, LocalDate date, float cgpa) {
-        this.name = name;
-        this.id = id;
-        this.date = date;
-        this.cgpa = cgpa;
-    
-    }
     public String getName() {
         return name;
     }
@@ -38,5 +31,12 @@ public class StudentEntity {
     public void setCgpa(float cgpa) {
         this.cgpa = cgpa;
     }
+    public StudentEntity(String name, int id, LocalDate date, float cgpa) {
+        this.name = name;
+        this.id = id;
+        this.date = date;
+        this.cgpa = cgpa;
+    }
     
+
 }
