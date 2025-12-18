@@ -2,8 +2,8 @@ package com.example.demo.repository;
 
 import org.springframework.jpa.repository.JpaRepository;
 
-import com.example.demo.entity.Zone;
+import com.example.demo.entity.SensorReading;
 
-public interface ZoneRepository extends JpaRespository<user,Long>{
+public interface SensorReadingRepository extends JpaRespository<SensorReading,Long>{
 
 }
