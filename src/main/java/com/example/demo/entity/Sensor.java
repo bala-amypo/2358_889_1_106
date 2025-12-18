@@ -3,27 +3,14 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(
-    name = "sensor",
-    uniqueConstraints = {
-        @UniqueConstraint(columnNames = "sensor_code")
-    }
-)
 public class Sensor {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @id
     private Long id;
 
-    @Column(name = "sensor_code", nullable = false, unique = true)
+    @Column(unique=true)
     private String sensorCode;
-
-    @NotBlank(message = "sensorType is required")
-    @Column(name = "sensor_type", nullable = false)
     private String sensorType;
     @ManyToOne
-    @JoinColumn(name = "location_id", nullable = false)
     private Location location;
     @Column(name = "installed_at")
     private LocalDateTime installedAt;
