@@ -2,12 +2,12 @@ package com.example.demo.entity;
 
 import java.time.LocalDate;
 
-public class Studententity {
+public class StudentEntity {
     private String name;
     private int id;
     private LocalDate date;
     private float cgpa;
-    public Studententity(String name, int id, LocalDate date, float cgpa) {
+    public StudentEntity(String name, int id, LocalDate date, float cgpa) {
         this.name = name;
         this.id = id;
         this.date = date;
