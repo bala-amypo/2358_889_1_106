@@ -4,7 +4,9 @@ import java.time.LocalDate;
 
 public class StudentEntity {
     private Long id;
-    private String name;
+    @column(message="unique")
+    private String sensorCode;
+    
     private LocalDate date;
     private float cgpa;
     public String getName() {
