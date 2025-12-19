@@ -1,9 +1,9 @@
-// package com.example.demo.repository;
+package com.example.demo.repository;
 
-// import org.springframework.jpa.repository.JpaRepository;
+import org.springframework.jpa.repository.JpaRepository;
 
-// import com.example.demo.entity.ComplianceThreshold;
+import com.example.demo.entity.ComplianceThreshold;
 
-// public interface  ComplianceThresholdRepository extends JpaRespository<ComplianceThreshold,Long>{
+public interface  ComplianceThresholdRepository extends JpaRespository<ComplianceThreshold,Long>{
 
-// }
+}
