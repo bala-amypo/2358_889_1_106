@@ -1,40 +1,40 @@
-@Service
-public class ComplianceEvaluationService {
+// @Service
+// public class ComplianceEvaluationService {
 
-    private final SensorReadingRepository readingRepo;
-    private final ComplianceThresholdRepository thresholdRepo;
-    private final ComplianceLogRepository logRepo;
+//     private final SensorReadingRepository readingRepo;
+//     private final ComplianceThresholdRepository thresholdRepo;
+//     private final ComplianceLogRepository logRepo;
 
-    public ComplianceEvaluationService(
-        SensorReadingRepository readingRepo,
-        ComplianceThresholdRepository thresholdRepo,
-        ComplianceLogRepository logRepo) {
+//     public ComplianceEvaluationService(
+//         SensorReadingRepository readingRepo,
+//         ComplianceThresholdRepository thresholdRepo,
+//         ComplianceLogRepository logRepo) {
 
-        this.readingRepo = readingRepo;
-        this.thresholdRepo = thresholdRepo;
-        this.logRepo = logRepo;
-    }
+//         this.readingRepo = readingRepo;
+//         this.thresholdRepo = thresholdRepo;
+//         this.logRepo = logRepo;
+//     }
 
-    public ComplianceLog evaluateReading(Long readingId) {
+//     public ComplianceLog evaluateReading(Long readingId) {
 
-        SensorReading reading = readingRepo.findById(readingId)
-                .orElseThrow(() -> new ResourceNotFoundException("not found"));
+//         SensorReading reading = readingRepo.findById(readingId)
+//                 .orElseThrow(() -> new ResourceNotFoundException("not found"));
 
-        ComplianceThreshold t = thresholdRepo
-                .findBySensorType(reading.getSensor().getSensorType())
-                .orElseThrow(() -> new ResourceNotFoundException("not found"));
+//         ComplianceThreshold t = thresholdRepo
+//                 .findBySensorType(reading.getSensor().getSensorType())
+//                 .orElseThrow(() -> new ResourceNotFoundException("not found"));
 
-        String status = (reading.getReadingValue() >= t.getMinValue()
-                && reading.getReadingValue() <= t.getMaxValue())
-                ? "COMPLIANT" : "NON_COMPLIANT";
+//         String status = (reading.getReadingValue() >= t.getMinValue()
+//                 && reading.getReadingValue() <= t.getMaxValue())
+//                 ? "COMPLIANT" : "NON_COMPLIANT";
 
-        reading.setStatus(status);
+//         reading.setStatus(status);
 
-        ComplianceLog log = new ComplianceLog();
-        log.setSensorReading(reading);
-        log.setThresholdUsed(t);
-        log.setStatusAssigned(status);
+//         ComplianceLog log = new ComplianceLog();
+//         log.setSensorReading(reading);
+//         log.setThresholdUsed(t);
+//         log.setStatusAssigned(status);
 
-        return logRepo.save(log);
-    }
-}
+//         return logRepo.save(log);
+//     }
+// }
