@@ -1,9 +1,9 @@
-package com.example.demo.repository;
+// package com.example.demo.repository;
 
-import org.springframework.jpa.repository.JpaRepository;
+// import org.springframework.jpa.repository.JpaRepository;
 
-import com.example.demo.entity.Sensor;
+// import com.example.demo.entity.Sensor;
 
-public interface SensorRepository extends JpaRespository<Sensor,Long>{
+// public interface SensorRepository extends JpaRespository<Sensor,Long>{
 
-}
+// }
