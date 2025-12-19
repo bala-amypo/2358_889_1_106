@@ -6,6 +6,13 @@ import java.time.LocalDateTime;
 @Entity
 public class SensorReading {
 
+    public SensorReading(Long id, Sensor sensor, Double readingValue, LocalDateTime readingTime, String status) {
+        this.id = id;
+        this.sensor = sensor;
+        this.readingValue = readingValue;
+        this.readingTime = readingTime;
+        this.status = status;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

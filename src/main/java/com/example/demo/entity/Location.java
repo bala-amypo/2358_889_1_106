@@ -7,6 +7,13 @@ import java.time.LocalDateTime;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "locationName"))
 public class Location {
 
+    public Location(Long id, String locationName, String description, String region, LocalDateTime createdAt) {
+        this.id = id;
+        this.locationName = locationName;
+        this.description = description;
+        this.region = region;
+        this.createdAt = createdAt;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -7,6 +7,15 @@ import java.time.LocalDateTime;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "sensorCode"))
 public class Sensor {
 
+    public Sensor(Long id, String sensorCode, String sensorType, Location location, LocalDateTime installedAt,
+            Boolean isActive) {
+        this.id = id;
+        this.sensorCode = sensorCode;
+        this.sensorType = sensorType;
+        this.location = location;
+        this.installedAt = installedAt;
+        this.isActive = isActive;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
