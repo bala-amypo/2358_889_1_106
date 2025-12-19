@@ -6,11 +6,19 @@ import java.time.LocalDateTime;
 @Entity
 public class ComplianceLog {
 
+    public ComplianceLog(Long id, SensorReading sensorReading, ComplianceThreshold thresholdUsed, String statusAssigned,
+            String remarks, LocalDateTime loggedAt) {
+        this.id = id;
+        this.sensorReading = sensorReading;
+        this.thresholdUsed = thresholdUsed;
+        this.statusAssigned = statusAssigned;
+        this.remarks = remarks;
+        this.loggedAt = loggedAt;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
     @JoinColumn(name = "sensor_reading_id", nullable = false)
     private SensorReading sensorReading;
 
