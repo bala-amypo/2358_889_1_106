@@ -20,6 +20,7 @@ public class ComplianceEvaluationServiceImpl implements ComplianceEvaluationServ
     private final ComplianceThresholdRepository thresholdRepository;
     private final ComplianceLogRepository logRepository;
 
+    // Constructor Injection (fixes missing symbol errors for repositories)
     public ComplianceEvaluationServiceImpl(SensorReadingRepository sensorReadingRepository,
                                            ComplianceThresholdRepository thresholdRepository,
                                            ComplianceLogRepository logRepository) {
@@ -31,27 +32,26 @@ public class ComplianceEvaluationServiceImpl implements ComplianceEvaluationServ
     @Override
     public ComplianceLog evaluateReading(Long readingId) {
         SensorReading reading = sensorReadingRepository.findById(readingId)
-                .orElseThrow(() -> new ResourceNotFoundException("Sensor Reading not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Reading not found"));
 
-        String sensorType = reading.getSensor().getSensorType();
-        ComplianceThreshold threshold = thresholdRepository.findBySensorType(sensorType)
-                .orElseThrow(() -> new ResourceNotFoundException("No threshold defined for type: " + sensorType));
+        // Get threshold based on sensor type
+        ComplianceThreshold threshold = thresholdRepository.findBySensorType(reading.getSensor().getSensorType())
+                .orElseThrow(() -> new ResourceNotFoundException("Threshold not found for type"));
 
-        String status = "UNSAFE";
-        if (reading.getReadingValue() >= threshold.getMinValue() && 
-            reading.getReadingValue() <= threshold.getMaxValue()) {
-            status = "SAFE";
-        }
+        // Evaluate status
+        String status = (reading.getReadingValue() >= threshold.getMinValue() && 
+                         reading.getReadingValue() <= threshold.getMaxValue()) ? "SAFE" : "UNSAFE";
 
         reading.setStatus(status);
         sensorReadingRepository.save(reading);
 
+        // Create log entry using the No-Args Constructor
         ComplianceLog log = new ComplianceLog();
         log.setSensorReading(reading);
         log.setThresholdUsed(threshold);
         log.setStatusAssigned(status);
         log.setLoggedAt(LocalDateTime.now());
-        log.setRemarks("Evaluated against threshold " + threshold.getId());
+        log.setRemarks("Value: " + reading.getReadingValue());
 
         return logRepository.save(log);
     }
@@ -64,6 +64,6 @@ public class ComplianceEvaluationServiceImpl implements ComplianceEvaluationServ
     @Override
     public ComplianceLog getLog(Long id) {
         return logRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Compliance Log not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Log not found"));
     }
 }
