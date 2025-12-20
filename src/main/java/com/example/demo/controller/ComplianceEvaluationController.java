@@ -1,4 +1,3 @@
-//ComplianceEvalutioncontroller
 package com.example.demo.controller;
 
 import com.example.demo.entity.ComplianceThreshold;
@@ -12,17 +11,17 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/thresholds")
 @Tag(name = "Thresholds Endpoints")
-public class ComplianceEvalutionController {
+public class ComplianceEvaluationController { // Class name fixed
 
     private final ComplianceThresholdService thresholdService;
 
-    public ComplianceThresholdController(ComplianceThresholdService thresholdService) {
+    // Constructor name must match class name
+    public ComplianceEvaluationController(ComplianceThresholdService thresholdService) {
         this.thresholdService = thresholdService;
     }
 
     @PostMapping
-    public ResponseEntity<ComplianceThreshold> createThreshold(
-            @RequestBody ComplianceThreshold threshold) {
+    public ResponseEntity<ComplianceThreshold> createThreshold(@RequestBody ComplianceThreshold threshold) {
         return ResponseEntity.ok(thresholdService.createThreshold(threshold));
     }
 
@@ -32,8 +31,7 @@ public class ComplianceEvalutionController {
     }
 
     @GetMapping("/type/{sensorType}")
-    public ResponseEntity<ComplianceThreshold> getBySensorType(
-            @PathVariable String sensorType) {
+    public ResponseEntity<ComplianceThreshold> getBySensorType(@PathVariable String sensorType) {
         return ResponseEntity.ok(thresholdService.getThresholdBySensorType(sensorType));
     }
 
