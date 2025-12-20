@@ -1,9 +1,10 @@
 package com.example.demo.repository;
 
-import org.springframework.jpa.repository.JpaRepository;
-
 import com.example.demo.entity.ComplianceLog;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ComplianceLogRepository extends JpaRespository<ComplianceLog,Long>{
+import java.util.List;
 
+public interface ComplianceLogRepository extends JpaRepository<ComplianceLog, Long> {
+    List<ComplianceLog> findBySensorReading_Id(Long sensorReadingId);
 }

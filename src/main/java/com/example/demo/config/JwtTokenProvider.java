@@ -9,16 +9,21 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    @Value("${jwt.secret}")
-    private String secretKey;
+    private final String jwtSecret;
+    private final long jwtExpirationInMs;
 
-    @Value("${jwt.expiration}")
-    private long expirationMillis;
+    // Constructor injection
+    public JwtTokenProvider(
+            @Value("${jwt.secret}") String jwtSecret,
+            @Value("${jwt.expiration}") long jwtExpirationInMs) {
+        this.jwtSecret = jwtSecret;
+        this.jwtExpirationInMs = jwtExpirationInMs;
+    }
 
     // Generate token
     public String generateToken(Long userId, String email, String role) {
         Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + expirationMillis);
+        Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
 
         return Jwts.builder()
                 .setSubject(email)
@@ -26,40 +31,55 @@ public class JwtTokenProvider {
                 .claim("role", role)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
-                .signWith(SignatureAlgorithm.HS512, secretKey)
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }
 
-    // Validate token
-    public boolean validateToken(String token) {
-        try {
-            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-            return true;
-        } catch (SignatureException | MalformedJwtException | ExpiredJwtException |
-                 UnsupportedJwtException | IllegalArgumentException e) {
-            return false;
-        }
-    }
-
-    // Extract email from token
-    public String extractEmail(String token) {
-        return getClaims(token).getSubject();
-    }
-
-    // Extract userId
-    public Long extractUserId(String token) {
-        return ((Number) getClaims(token).get("userId")).longValue();
-    }
-
-    // Extract role
-    public String extractRole(String token) {
-        return (String) getClaims(token).get("role");
-    }
-
-    private Claims getClaims(String token) {
-        return Jwts.parser()
-                .setSigningKey(secretKey)
+    // Get email (subject) from token
+    public String getEmailFromJWT(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(jwtSecret)
                 .parseClaimsJws(token)
                 .getBody();
+
+        return claims.getSubject();
+    }
+
+    // Get userId from token
+    public Long getUserIdFromJWT(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claims.get("userId", Long.class);
+    }
+
+    // Get role from token
+    public String getRoleFromJWT(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claims.get("role", String.class);
+    }
+
+    // Validate token
+    public boolean validateToken(String authToken) {
+        try {
+            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
+            return true;
+        } catch (SignatureException ex) {
+            throw new RuntimeException("Invalid JWT signature");
+        } catch (MalformedJwtException ex) {
+            throw new RuntimeException("Invalid JWT token");
+        } catch (ExpiredJwtException ex) {
+            throw new RuntimeException("Expired JWT token");
+        } catch (UnsupportedJwtException ex) {
+            throw new RuntimeException("Unsupported JWT token");
+        } catch (IllegalArgumentException ex) {
+            throw new RuntimeException("JWT claims string is empty");
+        }
     }
 }
