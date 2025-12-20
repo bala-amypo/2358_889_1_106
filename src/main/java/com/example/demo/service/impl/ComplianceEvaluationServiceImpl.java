@@ -9,7 +9,6 @@ import com.example.demo.repository.ComplianceThresholdRepository;
 import com.example.demo.repository.SensorReadingRepository;
 import com.example.demo.service.ComplianceEvaluationService;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,7 +19,6 @@ public class ComplianceEvaluationServiceImpl implements ComplianceEvaluationServ
     private final ComplianceThresholdRepository thresholdRepository;
     private final ComplianceLogRepository logRepository;
 
-    // Constructor Injection (fixes missing symbol errors for repositories)
     public ComplianceEvaluationServiceImpl(SensorReadingRepository sensorReadingRepository,
                                            ComplianceThresholdRepository thresholdRepository,
                                            ComplianceLogRepository logRepository) {
@@ -34,25 +32,21 @@ public class ComplianceEvaluationServiceImpl implements ComplianceEvaluationServ
         SensorReading reading = sensorReadingRepository.findById(readingId)
                 .orElseThrow(() -> new ResourceNotFoundException("Reading not found"));
 
-        // Get threshold based on sensor type
         ComplianceThreshold threshold = thresholdRepository.findBySensorType(reading.getSensor().getSensorType())
-                .orElseThrow(() -> new ResourceNotFoundException("Threshold not found for type"));
+                .orElseThrow(() -> new ResourceNotFoundException("Threshold not found"));
 
-        // Evaluate status
         String status = (reading.getReadingValue() >= threshold.getMinValue() && 
                          reading.getReadingValue() <= threshold.getMaxValue()) ? "SAFE" : "UNSAFE";
 
         reading.setStatus(status);
         sensorReadingRepository.save(reading);
 
-        // Create log entry using the No-Args Constructor
         ComplianceLog log = new ComplianceLog();
         log.setSensorReading(reading);
         log.setThresholdUsed(threshold);
         log.setStatusAssigned(status);
         log.setLoggedAt(LocalDateTime.now());
-        log.setRemarks("Value: " + reading.getReadingValue());
-
+        
         return logRepository.save(log);
     }
 
