@@ -13,17 +13,19 @@ public class OpenApiConfig {
 
     @Bean
     public OpenAPI customOpenAPI() {
+        final String securitySchemeName = "bearerAuth";
+        
         return new OpenAPI()
-                .info(new Info()
-                        .title("Water Quality Compliance Monitoring API")
-                        .version("1.0")
-                        .description("API for monitoring water quality sensors and compliance thresholds"))
-                .components(new Components()
-                        .addSecuritySchemes("bearer-key",
-                                new SecurityScheme()
-                                        .type(SecurityScheme.Type.HTTP)
-                                        .scheme("bearer")
-                                        .bearerFormat("JWT")))
-                .addSecurityItem(new SecurityRequirement().addList("bearer-key"));
+            .info(new Info()
+                .title("Water Quality Compliance Monitoring API")
+                .version("1.0")
+                .description("API for managing sensors, locations, and evaluating water quality compliance."))
+            .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
+            .components(new Components()
+                .addSecuritySchemes(securitySchemeName, new SecurityScheme()
+                    .name(securitySchemeName)
+                    .type(SecurityScheme.Type.HTTP)
+                    .scheme("bearer")
+                    .bearerFormat("JWT")));
     }
 }
