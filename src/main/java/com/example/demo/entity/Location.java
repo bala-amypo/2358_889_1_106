@@ -18,12 +18,11 @@ public class Location {
         this.id = id; this.locationId = locationId; this.name = name; this.address = address; this.createdAt = createdAt;
     }
 
-    // Standard Getters/Setters
     public Long getId() { return id; }
     public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
-    // ALIAS FOR SERVICE LAYER
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    
+    // Service Aliases
     public String getRegion() { return this.name; }
     public void setRegion(String region) { this.name = region; }
 }
