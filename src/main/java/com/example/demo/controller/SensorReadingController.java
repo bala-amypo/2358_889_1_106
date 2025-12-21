@@ -1,38 +1,26 @@
-package com.example.demo.controller;
+package com.example.demo.entity;
 
-import com.example.demo.entity.SensorReading;
-import com.example.demo.service.SensorReadingService;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
-import java.util.List;
+@Entity
+public class SensorReading {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @ManyToOne
+    private Sensor sensor;
+    private Double value;
+    private LocalDateTime timestamp;
 
-@RestController
-@RequestMapping("/api/readings")
-@Tag(name = "Sensor Readings Endpoints")
-public class SensorReadingController {
-
-    private final SensorReadingService readingService;
-
-    public SensorReadingController(SensorReadingService readingService) {
-        this.readingService = readingService;
+    public SensorReading() {}
+    public SensorReading(Long id, Sensor sensor, Double value, LocalDateTime timestamp, String status) {
+        this.id = id; this.sensor = sensor; this.value = value; this.timestamp = timestamp;
     }
 
-    @PostMapping("/{sensorId}")
-    public ResponseEntity<SensorReading> submitReading(
-            @PathVariable Long sensorId,
-            @RequestBody SensorReading reading) {
-        return ResponseEntity.ok(readingService.submitReading(sensorId, reading));
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<SensorReading> getReading(@PathVariable Long id) {
-        return ResponseEntity.ok(readingService.getReading(id));
-    }
-
-    @GetMapping("/sensor/{sensorId}")
-    public ResponseEntity<List<SensorReading>> getBySensor(@PathVariable Long sensorId) {
-        return ResponseEntity.ok(readingService.getReadingsBySensor(sensorId));
-    }
+    // ALIASES FOR SERVICE LAYER
+    public Double getReadingValue() { return this.value; }
+    public void setReadingValue(Double value) { this.value = value; }
+    public LocalDateTime getReadingTime() { return this.timestamp; }
+    public void setReadingTime(LocalDateTime time) { this.timestamp = time; }
 }
