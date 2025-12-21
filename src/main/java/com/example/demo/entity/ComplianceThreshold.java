@@ -8,23 +8,23 @@ public class ComplianceThreshold {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String sensorType;
-    private Double min;
-    private Double max;
-    private String severity;
+    
+    private String sensorType; // Used by findBySensorType
+    private Double minThreshold;
+    private Double maxThreshold;
     private LocalDateTime createdAt;
 
     public ComplianceThreshold() {}
-    public ComplianceThreshold(Long id, String sensorType, Double min, Double max, String severity, LocalDateTime createdAt) {
-        this.id = id; this.sensorType = sensorType; this.min = min; this.max = max; this.severity = severity; this.createdAt = createdAt;
-    }
 
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
-    public String getSensorType() { return this.sensorType; }
+    // Getters and Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getSensorType() { return sensorType; }
     public void setSensorType(String sensorType) { this.sensorType = sensorType; }
-
-    // Service Aliases
-    public Double getMinValue() { return this.min; }
-    public Double getMaxValue() { return this.max; }
-    public String getSeverityLevel() { return this.severity; }
+    public Double getMinThreshold() { return minThreshold; }
+    public void setMinThreshold(Double minThreshold) { this.minThreshold = minThreshold; }
+    public Double getMaxThreshold() { return maxThreshold; }
+    public void setMaxThreshold(Double maxThreshold) { this.maxThreshold = maxThreshold; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 }
