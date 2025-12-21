@@ -28,11 +28,10 @@ public class ComplianceEvaluationServiceImpl implements ComplianceEvaluationServ
         SensorReading reading = sensorReadingRepository.findById(readingId)
                 .orElseThrow(() -> new ResourceNotFoundException("Reading not found"));
 
-        // This line will now compile because the Repository returns Optional
+        // Now findBySensorType returns an Optional, so .orElseThrow() is a valid symbol!
         ComplianceThreshold threshold = thresholdRepository.findBySensorType(reading.getSensor().getSensorType())
                 .orElseThrow(() -> new ResourceNotFoundException("Threshold not found"));
 
-        // These lines will now compile because we added getMinValue/getMaxValue to the Entity
         String status = (reading.getReadingValue() >= threshold.getMinValue() && 
                          reading.getReadingValue() <= threshold.getMaxValue()) ? "SAFE" : "UNSAFE";
 

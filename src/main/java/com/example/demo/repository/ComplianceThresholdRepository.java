@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ComplianceThresholdRepository extends JpaRepository<ComplianceThreshold, Long> {
-    ComplianceThreshold findBySensorType(String sensorType);
+    Optional<ComplianceThreshold> findBySensorType(String sensorType);
+
 }
