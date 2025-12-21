@@ -17,15 +17,21 @@ public class LocationService {
         return locationRepository.findAll();
     }
 
-    public Location saveLocation(Location location) {
+    // ALIAS: Controller calls 'createLocation'
+    public Location createLocation(Location location) {
         if (location.getCreatedAt() == null) {
             location.setCreatedAt(LocalDateTime.now());
         }
         return locationRepository.save(location);
     }
 
+    // ALIAS: Controller calls 'getLocation'
+    public Location getLocation(Long id) {
+        return locationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Location not found with id: " + id));
+    }
+
     public Location getLocationByName(String name) {
-        // Updated to use findByName instead of findByLocationName
         return locationRepository.findByName(name)
                 .orElseThrow(() -> new RuntimeException("Location not found with name: " + name));
     }

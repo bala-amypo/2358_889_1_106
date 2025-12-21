@@ -1,9 +1,8 @@
-//LocationController
 package com.example.demo.controller;
 
 import com.example.demo.entity.Location;
 import com.example.demo.service.LocationService;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,13 +10,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/locations")
-@Tag(name = "Locations Endpoints")
 public class LocationController {
 
-    private final LocationService locationService;
+    @Autowired
+    private LocationService locationService;
 
-    public LocationController(LocationService locationService) {
-        this.locationService = locationService;
+    @GetMapping
+    public List<Location> getAllLocations() {
+        return locationService.getAllLocations();
     }
 
     @PostMapping
@@ -28,10 +28,5 @@ public class LocationController {
     @GetMapping("/{id}")
     public ResponseEntity<Location> getLocation(@PathVariable Long id) {
         return ResponseEntity.ok(locationService.getLocation(id));
-    }
-
-    @GetMapping
-    public ResponseEntity<List<Location>> getAllLocations() {
-        return ResponseEntity.ok(locationService.getAllLocations());
     }
 }
