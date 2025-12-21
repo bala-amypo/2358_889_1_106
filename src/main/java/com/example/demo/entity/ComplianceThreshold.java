@@ -1,35 +1,80 @@
+
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "sensorType"))
 public class ComplianceThreshold {
+
+    public ComplianceThreshold(Long id, String sensorType, Double minValue, Double maxValue, String severityLevel,
+            LocalDateTime createdAt) {
+        this.id = id;
+        this.sensorType = sensorType;
+        this.minValue = minValue;
+        this.maxValue = maxValue;
+        this.severityLevel = severityLevel;
+        this.createdAt = createdAt;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     private String sensorType;
-    private Double minThreshold;
-    private Double maxThreshold;
+    private Double minValue;
+    private Double maxValue;
+    private String severityLevel;
 
-    public ComplianceThreshold() {}
+    @Column(updatable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
 
-    // Getters for standard fields
-    public String getSensorType() { return sensorType; }
-    public Double getMinThreshold() { return minThreshold; }
-    public Double getMaxThreshold() { return maxThreshold; }
+    public Long getId() {
+        return id;
+    }
 
-    // ALIAS METHODS: These fix the "cannot find symbol" for getMinValue/getMaxValue
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getSensorType() {
+        return sensorType;
+    }
+
+    public void setSensorType(String sensorType) {
+        this.sensorType = sensorType;
+    }
+
     public Double getMinValue() {
-        return this.minThreshold;
+        return minValue;
+    }
+
+    public void setMinValue(Double minValue) {
+        this.minValue = minValue;
     }
 
     public Double getMaxValue() {
-        return this.maxThreshold;
+        return maxValue;
     }
-    
-    // Setters
-    public void setSensorType(String sensorType) { this.sensorType = sensorType; }
-    public void setMinThreshold(Double minThreshold) { this.minThreshold = minThreshold; }
-    public void setMaxThreshold(Double maxThreshold) { this.maxThreshold = maxThreshold; }
+
+    public void setMaxValue(Double maxValue) {
+        this.maxValue = maxValue;
+    }
+
+    public String getSeverityLevel() {
+        return severityLevel;
+    }
+
+    public void setSeverityLevel(String severityLevel) {
+        this.severityLevel = severityLevel;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 }
