@@ -11,7 +11,15 @@ import java.util.List;
 @Service
 public class ComplianceThresholdService {
 
-    private final ComplianceThresholdRepository thresholdRepository;
+    @Service
+public class ComplianceThresholdService {
+
+    @Autowired
+    private ComplianceThresholdRepository thresholdRepository; // Ensure this matches!
+
+    public List<ComplianceThreshold> getAllThresholds() {
+        return thresholdRepository.findAll();
+    }
 
     public ComplianceThresholdService(ComplianceThresholdRepository thresholdRepository) {
         this.thresholdRepository = thresholdRepository;
