@@ -4,66 +4,42 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "sensorCode"))
 public class Sensor {
-
-    public Sensor(Long id, String sensorCode, String sensorType, Location location, LocalDateTime installedAt,
-            Boolean isActive) {
-        this.id = id;
-        this.sensorCode = sensorCode;
-        this.sensorType = sensorType;
-        this.location = location;
-        this.installedAt = installedAt;
-        this.isActive = isActive;
-    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String sensorCode;
-    private String sensorType;
-
-    @ManyToOne
-    private Location location;
-
-    private LocalDateTime installedAt = LocalDateTime.now();
-    private Boolean isActive = true;
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public String getSensorCode() {
-        return sensorCode;
-    }
-    public void setSensorCode(String sensorCode) {
-        this.sensorCode = sensorCode;
-    }
-    public String getSensorType() {
-        return sensorType;
-    }
-    public void setSensorType(String sensorType) {
-        this.sensorType = sensorType;
-    }
-    public Location getLocation() {
-        return location;
-    }
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-    public LocalDateTime getInstalledAt() {
-        return installedAt;
-    }
-    public void setInstalledAt(LocalDateTime installedAt) {
-        this.installedAt = installedAt;
-    }
-    public Boolean getIsActive() {
-        return isActive;
-    }
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
-    }
-
+    private String sensorId;
+    private String type;
     
+    @ManyToOne
+    @JoinColumn(name = "location_id")
+    private Location location;
+    
+    private LocalDateTime createdAt;
+    private Boolean active;
+
+    // --- REQUIRED FOR TESTS ---
+    public Sensor(Long id, String sensorId, String type, Location location, LocalDateTime createdAt, Boolean active) {
+        this.id = id;
+        this.sensorId = sensorId;
+        this.type = type;
+        this.location = location;
+        this.createdAt = createdAt;
+        this.active = active;
+    }
+    public Sensor() {}
+
+    // Getters and Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getSensorId() { return sensorId; }
+    public void setSensorId(String sensorId) { this.sensorId = sensorId; }
+    public String getType() { return type; }
+    public void setType(String type) { this.type = type; }
+    public Location getLocation() { return location; }
+    public void setLocation(Location location) { this.location = location; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public Boolean getActive() { return active; }
+    public void setActive(Boolean active) { this.active = active; }
 }

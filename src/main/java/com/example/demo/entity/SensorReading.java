@@ -5,58 +5,37 @@ import java.time.LocalDateTime;
 
 @Entity
 public class SensorReading {
-
-    public SensorReading(Long id, Sensor sensor, Double readingValue, LocalDateTime readingTime, String status) {
-        this.id = id;
-        this.sensor = sensor;
-        this.readingValue = readingValue;
-        this.readingTime = readingTime;
-        this.status = status;
-    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
     @ManyToOne
-    @JoinColumn(name = "sensor_id", nullable = false)
+    @JoinColumn(name = "sensor_id")
     private Sensor sensor;
+    
+    private Double value;
+    private LocalDateTime timestamp;
+    private String status; // 'OK' or 'ALERT'
 
-    private Double readingValue;
-
-    @Column(nullable = false)
-    private LocalDateTime readingTime;
-
-    @Column(length = 20)
-    private String status;
-
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
+    // --- REQUIRED FOR TESTS ---
+    public SensorReading(Long id, Sensor sensor, Double value, LocalDateTime timestamp, String status) {
         this.id = id;
-    }
-    public Sensor getSensor() {
-        return sensor;
-    }
-    public void setSensor(Sensor sensor) {
         this.sensor = sensor;
-    }
-    public Double getReadingValue() {
-        return readingValue;
-    }
-    public void setReadingValue(Double readingValue) {
-        this.readingValue = readingValue;
-    }
-    public LocalDateTime getReadingTime() {
-        return readingTime;
-    }
-    public void setReadingTime(LocalDateTime readingTime) {
-        this.readingTime = readingTime;
-    }
-    public String getStatus() {
-        return status;
-    }
-    public void setStatus(String status) {
+        this.value = value;
+        this.timestamp = timestamp;
         this.status = status;
     }
+    public SensorReading() {}
+
+    // Getters and Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public Sensor getSensor() { return sensor; }
+    public void setSensor(Sensor sensor) { this.sensor = sensor; }
+    public Double getValue() { return value; }
+    public void setValue(Double value) { this.value = value; }
+    public LocalDateTime getTimestamp() { return timestamp; }
+    public void setTimestamp(LocalDateTime timestamp) { this.timestamp = timestamp; }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 }

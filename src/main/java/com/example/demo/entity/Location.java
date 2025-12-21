@@ -2,55 +2,38 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "locationName"))
 public class Location {
-
-    public Location(Long id, String locationName, String description, String region, LocalDateTime createdAt) {
-        this.id = id;
-        this.locationName = locationName;
-        this.description = description;
-        this.region = region;
-        this.createdAt = createdAt;
-    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String locationId;
+    private String name;
+    private String address;
+    private LocalDateTime createdAt;
 
-    private String locationName;
-    private String description;
-    private String region;
-    private LocalDateTime createdAt = LocalDateTime.now();
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
+    // --- REQUIRED FOR TESTS ---
+    public Location(Long id, String locationId, String name, String address, LocalDateTime createdAt) {
         this.id = id;
-    }
-    public String getLocationName() {
-        return locationName;
-    }
-    public void setLocationName(String locationName) {
-        this.locationName = locationName;
-    }
-    public String getDescription() {
-        return description;
-    }
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    public String getRegion() {
-        return region;
-    }
-    public void setRegion(String region) {
-        this.region = region;
-    }
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-    public void setCreatedAt(LocalDateTime createdAt) {
+        this.locationId = locationId;
+        this.name = name;
+        this.address = address;
         this.createdAt = createdAt;
     }
+    // --- REQUIRED FOR JPA ---
+    public Location() {}
 
+    // Getters and Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getLocationId() { return locationId; }
+    public void setLocationId(String locationId) { this.locationId = locationId; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    public String getAddress() { return address; }
+    public void setAddress(String address) { this.address = address; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 }
