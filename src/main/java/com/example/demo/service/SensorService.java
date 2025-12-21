@@ -17,6 +17,7 @@ public class SensorService {
         this.locationRepo = locationRepo;
     }
 
+    @SuppressWarnings("null")
     public Sensor createSensor(Long locationId, Sensor sensor) {
         if (sensor.getSensorType() == null)
             throw new IllegalArgumentException("sensorType");
@@ -28,6 +29,7 @@ public class SensorService {
         return sensorRepo.save(sensor);
     }
 
+    @SuppressWarnings("null")
     public Sensor getSensor(Long id) {
         return sensorRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("not found"));
