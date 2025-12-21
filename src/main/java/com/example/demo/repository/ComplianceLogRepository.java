@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ComplianceLogRepository extends JpaRepository<ComplianceLog, Long> {
-    // Finds logs related to a specific reading ID
-    List<ComplianceLog> findBySensorReading_Id(Long sensorReadingId);
+    List<ComplianceLog> findBySensorReadingId(Long readingId);
+    List<ComplianceLog> findBySensorReading_Id(Long readingId); // For compatibility
 }
