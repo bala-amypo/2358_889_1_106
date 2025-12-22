@@ -1,3 +1,4 @@
+//interface - bussiness operation has been handled here
 package com.example.demo.service;
 
 import com.example.demo.entity.*;
