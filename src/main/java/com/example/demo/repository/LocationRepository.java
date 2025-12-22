@@ -2,9 +2,11 @@ package com.example.demo.repository;
 
 import com.example.demo.entity.Location;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 import java.util.Optional;
 
 public interface LocationRepository extends JpaRepository<Location, Long> {
-
-    Optional<Location> findByName(String name);
+    Optional<Location> findByLocationName(String locationName);
+    List<Location> findByRegion(String region);
 }
