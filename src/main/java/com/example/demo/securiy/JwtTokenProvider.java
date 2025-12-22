@@ -10,7 +10,6 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    // Minimum 32 characters for HS256
     private final String jwtSecret = "your-very-secure-secret-key-at-least-32-chars"; 
     private final long jwtExpirationInMs = 86400000; // 24 hours
 
