@@ -12,7 +12,6 @@ public class AuthRequest {
         this.password = password;
     }
 
-    // Getters and Setters
     public String getEmail() {
         return email;
     }

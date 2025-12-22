@@ -23,10 +23,8 @@ public class ComplianceLog {
     private String remarks;
     private LocalDateTime loggedAt;
 
-    // MANDATORY: No-args constructor to fix the "actual and formal argument lists differ" error
     public ComplianceLog() {}
 
-    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public SensorReading getSensorReading() { return sensorReading; }
