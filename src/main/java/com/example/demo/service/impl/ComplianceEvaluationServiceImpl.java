@@ -1,8 +1,13 @@
+// impl handles business logic
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.*;
+import com.example.demo.entity.ComplianceLog;
+import com.example.demo.entity.ComplianceThreshold;
+import com.example.demo.entity.SensorReading;
 import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.repository.*;
+import com.example.demo.repository.ComplianceLogRepository;
+import com.example.demo.repository.ComplianceThresholdRepository;
+import com.example.demo.repository.SensorReadingRepository;
 import com.example.demo.service.ComplianceEvaluationService;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -23,16 +28,15 @@ public class ComplianceEvaluationServiceImpl implements ComplianceEvaluationServ
         this.logRepository = logRepository;
     }
 
+    @SuppressWarnings("null")
     @Override
     public ComplianceLog evaluateReading(Long readingId) {
         SensorReading reading = sensorReadingRepository.findById(readingId)
                 .orElseThrow(() -> new ResourceNotFoundException("Reading not found"));
 
-        // This now works because Repository returns Optional
         ComplianceThreshold threshold = thresholdRepository.findBySensorType(reading.getSensor().getSensorType())
                 .orElseThrow(() -> new ResourceNotFoundException("Threshold not found"));
 
-        // Using minValue/maxValue from the fixed Entity
         String status = (reading.getReadingValue() >= threshold.getMinValue() && 
                          reading.getReadingValue() <= threshold.getMaxValue()) ? "SAFE" : "UNSAFE";
 
@@ -53,6 +57,7 @@ public class ComplianceEvaluationServiceImpl implements ComplianceEvaluationServ
         return logRepository.findBySensorReadingId(readingId);
     }
 
+    @SuppressWarnings("null")
     @Override
     public ComplianceLog getLog(Long id) {
         return logRepository.findById(id)
