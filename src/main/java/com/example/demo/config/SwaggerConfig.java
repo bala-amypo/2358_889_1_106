@@ -18,5 +18,3 @@ public class SwaggerConfig {
         }
 }
 
-//lsof -i :9001
-//kill -9 12345
