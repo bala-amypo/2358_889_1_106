@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/thresholds")
-@Tag(name = "Thresholds Endpoints")
-public class ComplianceEvaluationController { // Class name fixed
+@RequestMapping("/api/evaluations")
+@Tag(name = "Evaluations Endpoints")
+public class ComplianceEvaluationController {
 
     private final ComplianceThresholdService thresholdService;
 
@@ -21,7 +21,7 @@ public class ComplianceEvaluationController { // Class name fixed
     }
 
     @PostMapping
-    public ResponseEntity<ComplianceThreshold> createThreshold(@RequestBody ComplianceThreshold threshold) {
+    public ResponseEntity<ComplianceThreshold> createEvaluation(@RequestBody ComplianceThreshold threshold) {
         return ResponseEntity.ok(thresholdService.createThreshold(threshold));
     }
 
