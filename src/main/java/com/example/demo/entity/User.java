@@ -17,6 +17,14 @@ public class User {
 
     private String role;
 
+    public User() {}
+
+    public User(String email, String password, Role role) {
+        this.email = email;
+        this.password = password;
+        this.role = role != null ? role.name() : null;
+    }
+
     // Manually add Getters and Setters since Lombok is missing
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

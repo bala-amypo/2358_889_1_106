@@ -19,13 +19,9 @@ public class ComplianceThreshold {
     @Column(updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    // Default Constructor (Required by JPA)
     public ComplianceThreshold() {}
 
-    // Parameterized Constructor
-    public ComplianceThreshold(Long id, String sensorType, Double minValue, Double maxValue, String severityLevel,
-                                LocalDateTime createdAt) {
-        this.id = id;
+    public ComplianceThreshold(String sensorType, Double minValue, Double maxValue, String severityLevel, LocalDateTime createdAt) {
         this.sensorType = sensorType;
         this.minValue = minValue;
         this.maxValue = maxValue;
@@ -33,22 +29,51 @@ public class ComplianceThreshold {
         this.createdAt = createdAt;
     }
 
-    // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getSensorType() { return sensorType; }
-    public void setSensorType(String sensorType) { this.sensorType = sensorType; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public Double getMinValue() { return minValue; }
-    public void setMinValue(Double minValue) { this.minValue = minValue; }
+    public String getSensorType() {
+        return sensorType;
+    }
 
-    public Double getMaxValue() { return maxValue; }
-    public void setMaxValue(Double maxValue) { this.maxValue = maxValue; }
+    public void setSensorType(String sensorType) {
+        this.sensorType = sensorType;
+    }
 
-    public String getSeverityLevel() { return severityLevel; }
-    public void setSeverityLevel(String severityLevel) { this.severityLevel = severityLevel; }
+    public Double getMinValue() {
+        return minValue;
+    }
 
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public void setMinValue(Double minValue) {
+        this.minValue = minValue;
+    }
+
+    public Double getMaxValue() {
+        return maxValue;
+    }
+
+    public void setMaxValue(Double maxValue) {
+        this.maxValue = maxValue;
+    }
+
+    public String getSeverityLevel() {
+        return severityLevel;
+    }
+
+    public void setSeverityLevel(String severityLevel) {
+        this.severityLevel = severityLevel;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 }

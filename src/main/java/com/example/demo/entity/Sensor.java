@@ -9,15 +9,6 @@ import java.time.LocalDateTime;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "sensorCode"))
 public class Sensor {
 
-    public Sensor(Long id, String sensorCode, String sensorType, Location location, LocalDateTime installedAt,
-            Boolean isActive) {
-        this.id = id;
-        this.sensorCode = sensorCode;
-        this.sensorType = sensorType;
-        this.location = location;
-        this.installedAt = installedAt;
-        this.isActive = isActive;
-    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,6 +21,17 @@ public class Sensor {
 
     private LocalDateTime installedAt = LocalDateTime.now();
     private Boolean isActive = true;
+
+    public Sensor() {}
+
+    public Sensor(String sensorCode, String sensorType, Location location, LocalDateTime installedAt, Boolean isActive) {
+        this.sensorCode = sensorCode;
+        this.sensorType = sensorType;
+        this.location = location;
+        this.installedAt = installedAt;
+        this.isActive = isActive;
+    }
+
     public Long getId() {
         return id;
     }
@@ -66,6 +68,4 @@ public class Sensor {
     public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
     }
-
-    
 }
