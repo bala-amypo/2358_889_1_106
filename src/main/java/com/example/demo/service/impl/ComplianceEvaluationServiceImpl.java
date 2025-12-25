@@ -1,4 +1,3 @@
-// impl handles business logic
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.ComplianceLog;
@@ -8,13 +7,12 @@ import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.ComplianceLogRepository;
 import com.example.demo.repository.ComplianceThresholdRepository;
 import com.example.demo.repository.SensorReadingRepository;
-import com.example.demo.service.ComplianceEvaluationService;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class ComplianceEvaluationServiceImpl implements ComplianceEvaluationService {
+public class ComplianceEvaluationServiceImpl {
 
     private final SensorReadingRepository sensorReadingRepository;
     private final ComplianceThresholdRepository thresholdRepository;
@@ -28,20 +26,25 @@ public class ComplianceEvaluationServiceImpl implements ComplianceEvaluationServ
         this.logRepository = logRepository;
     }
 
-    @SuppressWarnings("null")
-    @Override
     public ComplianceLog evaluateReading(Long readingId) {
+        if (readingId == null) {
+            throw new IllegalArgumentException("Reading ID cannot be null");
+        }
+        
         SensorReading reading = sensorReadingRepository.findById(readingId)
                 .orElseThrow(() -> new ResourceNotFoundException("Reading not found"));
 
         ComplianceThreshold threshold = thresholdRepository.findBySensorType(reading.getSensor().getSensorType())
                 .orElseThrow(() -> new ResourceNotFoundException("Threshold not found"));
 
+        // Check if log already exists
+        List<ComplianceLog> existingLogs = logRepository.findBySensorReading_Id(readingId);
+        if (!existingLogs.isEmpty()) {
+            return existingLogs.get(0);
+        }
+
         String status = (reading.getReadingValue() >= threshold.getMinValue() && 
                          reading.getReadingValue() <= threshold.getMaxValue()) ? "SAFE" : "UNSAFE";
-
-        reading.setStatus(status);
-        sensorReadingRepository.save(reading);
 
         ComplianceLog log = new ComplianceLog();
         log.setSensorReading(reading);
@@ -52,14 +55,19 @@ public class ComplianceEvaluationServiceImpl implements ComplianceEvaluationServ
         return logRepository.save(log);
     }
 
-    @Override
     public List<ComplianceLog> getLogsByReading(Long readingId) {
-        return logRepository.findBySensorReadingId(readingId);
+        if (readingId == null) {
+            throw new IllegalArgumentException("Reading ID cannot be null");
+        }
+        
+        return logRepository.findBySensorReading_Id(readingId);
     }
 
-    @SuppressWarnings("null")
-    @Override
     public ComplianceLog getLog(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID cannot be null");
+        }
+        
         return logRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Log not found"));
     }
