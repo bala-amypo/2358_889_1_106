@@ -37,7 +37,6 @@ public class ComplianceEvaluationServiceImpl {
         ComplianceThreshold threshold = thresholdRepository.findBySensorType(reading.getSensor().getSensorType())
                 .orElseThrow(() -> new ResourceNotFoundException("Threshold not found"));
 
-        // Check if log already exists
         List<ComplianceLog> existingLogs = logRepository.findBySensorReading_Id(readingId);
         if (!existingLogs.isEmpty()) {
             return existingLogs.get(0);
