@@ -1,59 +1,34 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.Role;
 import com.example.demo.entity.User;
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.repository.RoleRepository; 
 import com.example.demo.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
-
+    
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+    
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
     }
-
+    
     @Override
     public User register(User user) {
-        // Check if email already exists
         Optional<User> existing = userRepository.findByEmail(user.getEmail());
         if (existing.isPresent()) {
             throw new IllegalArgumentException("Email already exists");
         }
-        
-        if (user.getRole() == null) {
-            // Retrieve the Role entity from the database
-            Role defaultRole = roleRepository.findByName("ROLE_USER")
-                .orElseThrow(() -> new ResourceNotFoundException("Default Role ROLE_USER not found"));
-            
-            // FIX: Use defaultRole.getName() to convert the Role object to a String
-            // This matches the String type expected by user.setRole()
-            user.setRole(defaultRole.getName());
-        }
-        
         return userRepository.save(user);
     }
-
+    
     @Override
     public User findByEmail(String email) {
         return userRepository.findByEmail(email)
-            .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
-    }
-
-    @Override
-    public User findById(Long id) {
-        if (id == null) {
-            throw new IllegalArgumentException("ID cannot be null");
-        }
-        return userRepository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + id));
+            .orElseThrow(() -> new RuntimeException("User not found"));
     }
 }
