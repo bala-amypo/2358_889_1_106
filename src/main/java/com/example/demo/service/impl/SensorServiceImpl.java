@@ -5,12 +5,13 @@ import com.example.demo.entity.Sensor;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.LocationRepository;
 import com.example.demo.repository.SensorRepository;
+import com.example.demo.service.SensorService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class SensorServiceImpl {
+public class SensorServiceImpl implements SensorService {
 
     private final SensorRepository sensorRepository;
     private final LocationRepository locationRepository;

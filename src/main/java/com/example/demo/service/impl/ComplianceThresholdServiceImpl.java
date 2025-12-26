@@ -3,12 +3,13 @@ package com.example.demo.service.impl;
 import com.example.demo.entity.ComplianceThreshold;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.ComplianceThresholdRepository;
+import com.example.demo.service.ComplianceThresholdService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ComplianceThresholdServiceImpl {
+public class ComplianceThresholdServiceImpl implements ComplianceThresholdService {
 
     private final ComplianceThresholdRepository thresholdRepository;
 
