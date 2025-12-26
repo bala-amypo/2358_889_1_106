@@ -1,4 +1,3 @@
-//ComplianceLog.java
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
@@ -7,35 +6,31 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "compliance_logs")
 public class ComplianceLog {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "reading_id")
+    
+    @OneToOne
+    @JoinColumn(name = "sensor_reading_id")
     private SensorReading sensorReading;
-
-    @ManyToOne
-    @JoinColumn(name = "threshold_id")
-    private ComplianceThreshold thresholdUsed;
-
+    
+    @Column(nullable = false)
     private String statusAssigned;
-    private String remarks;
-    private LocalDateTime loggedAt;
+    
+    @Column(nullable = false)
+    private LocalDateTime evaluationTime = LocalDateTime.now();
 
     public ComplianceLog() {}
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+    
     public SensorReading getSensorReading() { return sensorReading; }
     public void setSensorReading(SensorReading sensorReading) { this.sensorReading = sensorReading; }
-    public ComplianceThreshold getThresholdUsed() { return thresholdUsed; }
-    public void setThresholdUsed(ComplianceThreshold thresholdUsed) { this.thresholdUsed = thresholdUsed; }
+    
     public String getStatusAssigned() { return statusAssigned; }
     public void setStatusAssigned(String statusAssigned) { this.statusAssigned = statusAssigned; }
-    public String getRemarks() { return remarks; }
-    public void setRemarks(String remarks) { this.remarks = remarks; }
-    public LocalDateTime getLoggedAt() { return loggedAt; }
-    public void setLoggedAt(LocalDateTime loggedAt) { this.loggedAt = loggedAt; }
+    
+    public LocalDateTime getEvaluationTime() { return evaluationTime; }
+    public void setEvaluationTime(LocalDateTime evaluationTime) { this.evaluationTime = evaluationTime; }
 }
