@@ -1,14 +1,10 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter; // If using Lombok
-import lombok.Setter; // If using Lombok
-
 @Entity
 @Table(name = "roles")
-@Getter // Automatically generates getName()
-@Setter
 public class Role {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -16,8 +12,35 @@ public class Role {
     @Column(nullable = false, unique = true)
     private String name;
 
-    // Manually add this if NOT using Lombok @Getter
+    // Default Constructor
+    public Role() {
+    }
+
+    // Constructor with name
+    public Role(String name) {
+        this.name = name;
+    }
+
+    // Getter for ID
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public static Role fromString(String roleName) {
+        Role role = new Role();
+        role.setName(roleName);
+        return role;
     }
 }
