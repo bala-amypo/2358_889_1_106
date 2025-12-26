@@ -7,12 +7,14 @@ import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.ComplianceLogRepository;
 import com.example.demo.repository.ComplianceThresholdRepository;
 import com.example.demo.repository.SensorReadingRepository;
+import com.example.demo.service.ComplianceEvaluationService;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class ComplianceEvaluationServiceImpl {
+public class ComplianceEvaluationServiceImpl implements ComplianceEvaluationService { 
 
     private final SensorReadingRepository sensorReadingRepository;
     private final ComplianceThresholdRepository thresholdRepository;
@@ -26,6 +28,7 @@ public class ComplianceEvaluationServiceImpl {
         this.logRepository = logRepository;
     }
 
+    @Override 
     public ComplianceLog evaluateReading(Long readingId) {
         if (readingId == null) {
             throw new IllegalArgumentException("Reading ID cannot be null");
@@ -54,6 +57,7 @@ public class ComplianceEvaluationServiceImpl {
         return logRepository.save(log);
     }
 
+    @Override
     public List<ComplianceLog> getLogsByReading(Long readingId) {
         if (readingId == null) {
             throw new IllegalArgumentException("Reading ID cannot be null");
@@ -62,6 +66,7 @@ public class ComplianceEvaluationServiceImpl {
         return logRepository.findBySensorReading_Id(readingId);
     }
 
+    @Override
     public ComplianceLog getLog(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("ID cannot be null");
