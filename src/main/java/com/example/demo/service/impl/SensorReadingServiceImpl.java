@@ -63,7 +63,7 @@ public class SensorReadingServiceImpl implements SensorReadingService {
 
         if (sensorId == null) {
             throw new IllegalArgumentException("Sensor ID cannot be null");
-        }
+    }
         return sensorReadingRepository.findBySensor_Id(sensorId);
     }
 }
