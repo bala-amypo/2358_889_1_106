@@ -67,10 +67,6 @@
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-security</artifactId>
 </dependency>
-
-
-
-
 <!-- JWT dependencies REQUIRED for test compilation -->
 <dependency>
     <groupId>io.jsonwebtoken</groupId>
