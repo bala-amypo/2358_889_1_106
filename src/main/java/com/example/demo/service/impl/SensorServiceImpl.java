@@ -5,17 +5,14 @@ import com.example.demo.entity.Sensor;
 import com.example.demo.repository.LocationRepository;
 import com.example.demo.repository.SensorRepository;
 import com.example.demo.service.SensorService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
 public class SensorServiceImpl implements SensorService {
-    
     private final SensorRepository sensorRepository;
     private final LocationRepository locationRepository;
     
-    @Autowired
     public SensorServiceImpl(SensorRepository sensorRepository, LocationRepository locationRepository) {
         this.sensorRepository = sensorRepository;
         this.locationRepository = locationRepository;
@@ -23,13 +20,11 @@ public class SensorServiceImpl implements SensorService {
     
     @Override
     public Sensor createSensor(Long locationId, Sensor sensor) {
-        if (sensor.getSensorType() == null || sensor.getSensorType().trim().isEmpty()) {
+        if (sensor.getSensorType() == null || sensor.getSensorType().isEmpty()) {
             throw new IllegalArgumentException("sensorType required");
         }
-        
         Location location = locationRepository.findById(locationId)
             .orElseThrow(() -> new RuntimeException("Location not found"));
-        
         sensor.setLocation(location);
         return sensorRepository.save(sensor);
     }

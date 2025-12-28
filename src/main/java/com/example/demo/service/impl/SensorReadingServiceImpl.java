@@ -5,16 +5,13 @@ import com.example.demo.entity.SensorReading;
 import com.example.demo.repository.SensorReadingRepository;
 import com.example.demo.repository.SensorRepository;
 import com.example.demo.service.SensorReadingService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SensorReadingServiceImpl implements SensorReadingService {
-    
     private final SensorReadingRepository readingRepository;
     private final SensorRepository sensorRepository;
     
-    @Autowired
     public SensorReadingServiceImpl(SensorReadingRepository readingRepository, SensorRepository sensorRepository) {
         this.readingRepository = readingRepository;
         this.sensorRepository = sensorRepository;
@@ -25,10 +22,8 @@ public class SensorReadingServiceImpl implements SensorReadingService {
         if (reading.getReadingValue() == null) {
             throw new IllegalArgumentException("readingValue required");
         }
-        
         Sensor sensor = sensorRepository.findById(sensorId)
             .orElseThrow(() -> new RuntimeException("Sensor not found"));
-        
         reading.setSensor(sensor);
         return readingRepository.save(reading);
     }
